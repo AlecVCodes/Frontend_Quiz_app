@@ -1,0 +1,94 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --text: var(--blue-900);
+  --grey-500: #626c7f;
+  --grey-50: #f4f6fa;
+  --blue-950: #2d3949;
+  --blue-900: #313e51;
+  --blue-850: #3b4d66;
+  --blue-500: #306aff;
+  --blue-300: #abc1e1;
+  --blue-100: #edf1f9;
+  --blue-50: #ebf0ff;
+  --green-500: #2fd887;
+  --green-100: #e0fdef;
+  --purple-600: #a729f5;
+  --purple-100: #f6e7ff;
+  --orange-400: #ff7e35;
+  --orange-50: #fff5ed;
+  --red-500: #ee5454;
+}
+
+/* darkmode styles */
+
+.dark-mode {
+  --text: #000;
+}
+
+body {
+  background-color: var(--purple-100);
+}
+
+body.dark-mode {
+  background-color: var(--blue-900);
+}
+
+/* accessibility classes */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* header */
+
+header {
+  display: flex;
+  padding: 2rem;
+}
+
+/* dark / light mode toggle */
+
+.light-dark-mode-toggle {
+  margin-left: auto;
+}
+
+button.toggle-theme-btn {
+  border: none;
+  width: 50px;
+  height: 28px;
+  background-color: var(--purple-600);
+  position: relative;
+  border-radius: 35px;
+  cursor: pointer;
+}
+
+.toggle-circle {
+  top: 15%;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 200ms ease;
+  left: 10%;
+}
+
+.toggle-circle.dark-mode {
+  transform: translateX(120%);
+}
