@@ -15,9 +15,10 @@
   </head>
   <body>
     <header>
-      <h1 class="quiz-title visually-hidden">Quiz Main Menu</h1>
+      <div class="quiz-option-title"><h2>Quiz Option</h2></div>
       <div class="light-dark-mode-toggle">
         <svg
+          class="sun-icon"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -33,6 +34,7 @@
           <div class="toggle-circle"></div>
         </button>
         <svg
+          class="moon-icon"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -46,7 +48,29 @@
         </svg>
       </div>
     </header>
-    <main></main>
+    <main>
+      <section class="UI-Screen active" id="main-menu">
+        <div class="main-menu-text">
+          <h1>Welcome to the <br />Frontend Quiz!</h1>
+          <p>pick a subject to get started</p>
+        </div>
+        <div class="pick-quiz-container">
+          <div class="choose-quiz-option">
+            <h2>HTML</h2>
+          </div>
+          <div class="choose-quiz-option">
+            <h2>CSS</h2>
+          </div>
+          <div class="choose-quiz-option">
+            <h2>Javascript</h2>
+          </div>
+          <div class="choose-quiz-option">
+            <h2>Accessibility</h2>
+          </div>
+        </div>
+      </section>
+      <section class="UI-Screen" id="quiz-ui"></section>
+    </main>
     <script src="script.js"></script>
   </body>
 </html>

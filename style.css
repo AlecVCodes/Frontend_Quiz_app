@@ -7,7 +7,6 @@
 }
 
 :root {
-  --text: var(--blue-900);
   --grey-500: #626c7f;
   --grey-50: #f4f6fa;
   --blue-950: #2d3949;
@@ -24,20 +23,25 @@
   --orange-400: #ff7e35;
   --orange-50: #fff5ed;
   --red-500: #ee5454;
+
+  /* original light mode styles */
+
+  --text: #000;
+  --body: var(--grey-50);
 }
 
 /* darkmode styles */
 
 .dark-mode {
-  --text: #000;
+  --body: var(--blue-900);
+  --text: #fff;
+  --quiz-option-bg: var(var(--grey-500));
 }
 
 body {
-  background-color: var(--purple-100);
-}
-
-body.dark-mode {
-  background-color: var(--blue-900);
+  background-color: var(--body);
+  --text: var(--blue-900);
+  --quiz-option-bg: #fff;
 }
 
 /* accessibility classes */
@@ -59,6 +63,10 @@ body.dark-mode {
 header {
   display: flex;
   padding: 2rem;
+}
+
+.quiz-option-title {
+  display: none;
 }
 
 /* dark / light mode toggle */
@@ -91,4 +99,22 @@ button.toggle-theme-btn {
 
 .toggle-circle.dark-mode {
   transform: translateX(120%);
+}
+
+.choose-quiz-option {
+  background-color: var(--quiz-option-bg);
+}
+/* main menu styling */
+
+.main-menu-text {
+  color: var(--text);
+}
+
+/* UI Screen change */
+.UI-screen {
+  display: none;
+}
+
+.UI-screen.active {
+  display: block;
 }
