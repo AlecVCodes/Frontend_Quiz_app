@@ -1,14 +1,25 @@
 //
 // DOM ELEMENTS
 //
+
+/* theme toggle */
 const ThemeToggleCircle = document.querySelector(".toggle-circle");
 const ThemeToggleBtn = document.querySelector(".toggle-theme-btn");
 const sunIconFill = document.querySelector(".sun-icon > path");
 const moonIconFill = document.querySelector(".moon-icon > path");
+
+/* main menu quiz options */
+
+const quizOptions = document.querySelectorAll(".choose-quiz-option");
+
 //
 // STATE MANAGEMENT
 //
 let darkMode = localStorage.getItem("darkMode");
+
+let allQuizData;
+
+let currentQuiz;
 
 // Check saved theme on load
 if (darkMode === "enabled") {
@@ -28,28 +39,14 @@ ThemeToggleBtn.addEventListener("click", () => {
   }
 });
 
-
-
-//
-//FETCH QUIZ DATA
-//
-
-let allQuizData;
-
-fetch("./data.json")
-  .then((response) => {
-    if (!response.ok) return console.log("Error");
-
-    return response.json();
-  })
-  .then((data) => {
-    let allQuizData = data;
-
-    console.log(allQuizData, "all quiz data");
+quizOptions.forEach((quizOption, quizDataindex) => {
+  quizOption.addEventListener("click", () => {
+    fetchQuizData(quizDataindex);
   });
+});
 
 //
-// <FUNCTIONS></FUNCTIONS>
+// FUNCTIONS
 //
 
 function enableDarkMode() {
@@ -78,6 +75,23 @@ function disableDarkMode() {
 
 // Get Data for selected quiz
 
-function fetchQuizData(quizData) {
+function fetchQuizData(index) {
+  //FETCH QUIZ DATA
+  //
 
+  fetch("./data.json")
+    .then((response) => {
+      if (!response.ok) return console.log("Error");
+
+      return response.json();
+    })
+    .then((data) => {
+      //get data for all quizzes
+      let allQuizData = data.quizzes;
+
+      //get data for current quiz
+      let currentQuiz = allQuizData[index];
+
+      console.log(currentQuiz, "current quiz");
+    });
 }
