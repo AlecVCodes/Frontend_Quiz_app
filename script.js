@@ -28,6 +28,8 @@ ThemeToggleBtn.addEventListener("click", () => {
   }
 });
 
+
+
 //
 //FETCH QUIZ DATA
 //
@@ -72,4 +74,10 @@ function disableDarkMode() {
   moonIconFill.style.fill = "#626C7F";
   sunIconFill.style.fill = "#626C7F";
   localStorage.setItem("darkMode", null);
+}
+
+// Get Data for selected quiz
+
+function fetchQuizData(quizData) {
+
 }

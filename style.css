@@ -6,6 +6,9 @@
   padding: 0;
 }
 
+html {
+  font-family: "Rubik", sans-serif;
+}
 :root {
   --grey-500: #626c7f;
   --grey-50: #f4f6fa;
@@ -28,12 +31,14 @@
 
   --text: #000;
   --body: var(--grey-50);
+  --main-menu-options-text: var(--blue-900);
 }
 
 /* darkmode styles */
 
 .dark-mode {
   --body: var(--blue-900);
+  --main-menu-options-text: #fff;
   --text: #fff;
   --quiz-option-bg: var(var(--grey-500));
 }
@@ -42,6 +47,29 @@ body {
   background-color: var(--body);
   --text: var(--blue-900);
   --quiz-option-bg: #fff;
+  height: 100vh;
+  font-family: inherit;
+}
+
+/* typography  */
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+}
+
+h1 > span {
+  font-weight: 600;
+  margin-block: 2rem;
+}
+
+.main-menu-text > p {
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
+}
+
+.choose-quiz-option > h2 {
+  color: var(--main-menu-options-text);
+  font-weight: 500;
 }
 
 /* accessibility classes */
@@ -101,20 +129,69 @@ button.toggle-theme-btn {
   transform: translateX(120%);
 }
 
-.choose-quiz-option {
-  background-color: var(--quiz-option-bg);
-}
 /* main menu styling */
 
 .main-menu-text {
   color: var(--text);
 }
 
-/* UI Screen change */
-.UI-screen {
-  display: none;
+.main-menu-text > p {
+  margin-top: 1rem;
+  font-style: italic;
 }
 
-.UI-screen.active {
-  display: block;
+/* menu tabs */
+
+.pick-quiz-container {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
 }
+
+.choose-quiz-option {
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: var(--quiz-option-bg);
+  transition: all 200ms ease;
+}
+
+.choose-quiz-option:hover {
+  background-color: #f1f1f1;
+}
+
+.choose-quiz-option > .icon-background {
+  margin-right: 1rem;
+}
+
+/* main meny icons */
+
+.icon-background {
+  border-radius: 12px;
+  padding: 0.25rem;
+}
+
+.choose-quiz-option:nth-of-type(1) > .icon-background {
+  background-color: var(--orange-50);
+}
+.choose-quiz-option:nth-of-type(2) > .icon-background {
+  background-color: var(--green-100);
+}
+.choose-quiz-option:nth-of-type(3) > .icon-background {
+  background-color: var(--blue-50);
+}
+.choose-quiz-option:nth-of-type(4) > .icon-background {
+  background-color: var(--purple-100);
+}
+
+/* UI Screen change */
+.UI-Screen {
+  width: 90%;
+  margin-inline: auto;
+  flex-direction: column;
+  display: flex;
+}
+
+
