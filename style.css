@@ -1,9 +1,22 @@
+/* resets */
 *,
 *::after,
 *::before {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  list-style-type: none;
+}
+
+input,
+button,
+textarea,
+select {
+  -webkit-appearance: none;
+  color: inherit;
+  font: inherit;
+  background: none;
+  border: none;
 }
 
 html {
@@ -186,12 +199,54 @@ button.toggle-theme-btn {
   background-color: var(--purple-100);
 }
 
-/* UI Screen change */
+/* Quiz UI CSS */
 .UI-Screen {
   width: 90%;
   margin-inline: auto;
   flex-direction: column;
+  display: none;
+}
+
+.current-quiz-title {
+  display: none;
+}
+
+.UI-Screen.active {
   display: flex;
 }
 
+/* quiz answers*/
 
+.quiz-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.quiz-list > li {
+  display: flex;
+  align-items: center;
+  background-color: var(--quiz-option-bg);
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.quiz-letter-container {
+  padding: 0.875rem 1.125rem;
+  background-color: var(--grey-50);
+  color: var(--grey-500);
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+/* submit answer btn */
+
+.next-question-btn {
+  margin-top: 1rem;
+  background-color: var(--purple-600);
+  color: #fff;
+  width: 100%;
+  padding: 1rem;
+  font-size: clamp(1.125rem, 2vw, 1.75rem);
+  border-radius: 12px;
+}

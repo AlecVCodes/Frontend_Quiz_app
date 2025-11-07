@@ -22,6 +22,7 @@
   </head>
   <body>
     <header>
+      <h2 class="current-quiz-title"></h2>
       <div class="quiz-option-title"><h2>Quiz Option</h2></div>
       <div class="light-dark-mode-toggle">
         <svg
@@ -58,11 +59,10 @@
     <main>
       <section class="UI-Screen active" id="main-menu">
         <div class="main-menu-text">
-          <h1>Welcome to the <br />Frontend Quiz!</h1>
           <h1>Welcome to the <br /><span>Frontend Quiz!</span></h1>
           <p>pick a subject to get started</p>
         </div>
-        <div class="pick-quiz-container">
+        <section class="pick-quiz-container">
           <div class="choose-quiz-option">
             <div class="icon-background">
               <svg
@@ -131,9 +131,66 @@
             </div>
             <h2>Accessibility</h2>
           </div>
+        </section>
+      </section>
+      <section class="UI-Screen" id="quiz-ui">
+        <h1 class="current-quiz-question">Lorem ipsum dolor sit amet.</h1>
+        <div class="user-inputs">
+          <ul class="quiz-list" role="radiogroup">
+            <li role="radio" tabindex="0" class="quiz-answer">
+              <input
+                id="inputRadioAnswerA"
+                type="radio"
+                name="answer"
+                value="A"
+              />
+              <label for="inputRadioAnswerA" class="quiz-item">
+                <div class="quiz-letter-container">A</div>
+                <h2 class="quiz-answer-title"></h2>
+              </label>
+            </li>
+            <li role="radio" tabindex="0" class="quiz-answer">
+              <input
+                id="inputRadioAnswerB"
+                type="radio"
+                name="answer"
+                value="B"
+              />
+              <label for="inputRadioAnswerB" class="quiz-item">
+                <div class="quiz-letter-container">B</div>
+                <h2 class="quiz-answer-title"></h2>
+              </label>
+            </li>
+            <li role="radio" tabindex="0" class="quiz-answer">
+              <input
+                id="inputRadioAnswerC"
+                type="radio"
+                name="answer"
+                value="C"
+              />
+              <label for="inputRadioAnswerC" class="quiz-item">
+                <div class="quiz-letter-container">C</div>
+                <h2 class="quiz-answer-title"></h2>
+              </label>
+            </li>
+            <li role="radio" tabindex="0" class="quiz-answer">
+              <input
+                id="inputRadioAnswerD"
+                type="radio"
+                name="answer"
+                value="D"
+              />
+              <label for="inputRadioAnswerD" class="quiz-item">
+                <div class="quiz-letter-container">D</div>
+                <h2 class="quiz-answer-title"></h2>
+              </label>
+            </li>
+          </ul>
+          <button id="next-question-btn" class="next-question-btn">
+            Next Question
+          </button>
         </div>
       </section>
-      <section class="UI-Screen" id="quiz-ui"></section>
     </main>
     <script src="script.js"></script>
   </body>
