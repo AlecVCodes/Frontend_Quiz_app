@@ -226,9 +226,15 @@ button.toggle-theme-btn {
   display: flex;
   align-items: center;
   background-color: var(--quiz-option-bg);
-  cursor: pointer;
+
   padding: 1rem;
   border-radius: 12px;
+}
+.quiz-answer {
+  cursor: pointer;
+}
+.quiz-list > li.active {
+  outline: 2px solid var(--purple-600);
 }
 
 .quiz-letter-container {
@@ -237,6 +243,18 @@ button.toggle-theme-btn {
   color: var(--grey-500);
   cursor: pointer;
   border-radius: 6px;
+}
+
+/* styling for current selected question */
+.quiz-list > li.active .quiz-letter-container {
+  background-color: var(--purple-600);
+  color: white;
+}
+
+.quiz-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 /* submit answer btn */
