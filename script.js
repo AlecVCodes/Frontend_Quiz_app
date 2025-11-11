@@ -17,12 +17,16 @@ const quizOptionButtons = document.querySelectorAll(".choose-quiz-option");
 /* quiz UI screen */
 const quizUIScreen = document.querySelector("#quiz-ui");
 
+const progressBarTrack = document.querySelector(".current-quiz-progress-bar");
+const progressBarFill = document.querySelector(".progress-bar-filled");
+
 const quizAnswersContainer = document.querySelector(".quiz-list");
 
 quizAnswersContainer.style.pointEvents = "none";
 
 /* quiz options ui */
 const quizQuestion = document.querySelector(".current-quiz-question");
+const quizQuestionNumberUI = document.querySelector(".question-number");
 
 const quizAnswers = document.querySelectorAll(".quiz-list > li");
 
@@ -45,11 +49,10 @@ let selectedQuiz; // currently chosen quiz
 let isQuizLoaded = false;
 
 let userInputtedAnswerUI;
-
 let userInputtedAnswerValue;
-
 let submittedAnswer = null;
 
+let currentQuestionNumber = 1;
 let quizScore = 0;
 let activeQuestionIndex = 0;
 
@@ -108,12 +111,16 @@ quizAnswers.forEach((answer, index) => {
 
 // update set of questions when user clicks on next question button
 submitAnswerButton.addEventListener("click", () => {
-  console.log(submittedAnswer);
+  console.log(submittedAnswer, "submitted Answer");
   if (submittedAnswer === null) {
     // check answer of user
     checkAnswer();
   } else {
     // after checking answer then change the ui
+
+    //change quiz question number
+    currentQuestionNumber = currentQuestionNumber + 1;
+
     changeQuestionLogic();
   }
 });
@@ -179,11 +186,22 @@ function showQuizUI() {
   // change the data
   activeQuizState.title = selectedQuiz.title;
 
+  updateProgressBar();
+
   // show first set of questions
   changeQuestionLogic();
 }
 
 function changeQuestionLogic() {
+  if (currentQuestionNumber > 10) {
+    // show end screen
+    showQuizEndScreen();
+  }
+  // Reset the user input values
+  submittedAnswer = null;
+  userInputtedAnswerUI = null;
+  userInputtedAnswerValue = null;
+
   if (activeQuestionIndex < selectedQuiz.questions.length) {
     let activeQuestionData = selectedQuiz.questions[activeQuestionIndex];
 
@@ -204,18 +222,13 @@ function changeQuestionLogic() {
     // move to next question
     activeQuestionIndex++;
 
-    // Reset the user input values
-
-    userInputtedAnswerUI = null;
-    userInputtedAnswerValue = null;
-
-    //
-
+    console.log(userInputtedAnswerValue, "user inputted value");
     changeQuestionUI();
   }
 }
 
 function changeQuestionUI() {
+  console.log("function ran");
   // Enable pointer events again
   quizAnswersContainer.style.pointerEvents = "auto";
 
@@ -229,8 +242,20 @@ function changeQuestionUI() {
     answer.classList.remove("question-incorrect");
     answer.classList.remove("question-correct");
     answer.classList.remove("active");
+
+    //remove icons
+    // hide all error icons
+    document.querySelectorAll(".icon-error").forEach((icon) => {
+      icon.style.display = "none";
+    });
+
+    // hide all correct icons
+    document.querySelectorAll(".icon-correct").forEach((icon) => {
+      icon.style.display = "none";
+    });
   });
 
+  //display answers for current question
   quizQuestion.textContent = activeQuizState.questions[0].question;
 
   quizAnswerstitle.forEach((answer, index) => {
@@ -238,6 +263,12 @@ function changeQuestionUI() {
 
     answer.textContent = activeQuizState.questions[0].options[index];
   });
+
+  //update the progress bar
+  updateProgressBar();
+  //update question number UI
+
+  quizQuestionNumberUI.textContent = `Question ${currentQuestionNumber} of  10 `;
 }
 
 // highlight the selected answer chosen by the UI
@@ -283,12 +314,28 @@ function checkAnswer() {
     return;
   } else {
     //apply correct class to user input
+
+    const correctIcon = userInputtedAnswerUI.querySelector(".icon-correct");
+    correctIcon.style.display = "block";
     userInputtedAnswerUI.classList.add("question-correct");
 
     //add one to the quiz score
 
     quizScore++;
   }
+}
 
-  console.log(quizScore, "quiz score");
+function updateProgressBar() {
+  console.log("progress bar updated");
+  //update the width of the progrss bar based on the quiz score
+
+  console.log(currentQuestionNumber, "current question number");
+  progressBarFill.style.width = `${(currentQuestionNumber / 10) * 100}%`;
+}
+
+
+// finish the quiz
+
+function showQuizEndScreen() {
+  
 }
