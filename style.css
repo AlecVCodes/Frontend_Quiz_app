@@ -226,7 +226,7 @@ button.toggle-theme-btn {
   display: flex;
   align-items: center;
   background-color: var(--quiz-option-bg);
-
+  position: relative;
   padding: 1rem;
   border-radius: 12px;
 }
@@ -267,4 +267,34 @@ button.toggle-theme-btn {
   padding: 1rem;
   font-size: clamp(1.125rem, 2vw, 1.75rem);
   border-radius: 12px;
+  transition: 200ms ease;
+}
+
+.next-question-btn:hover {
+  cursor: pointer;
+  background-color: #d394fa;
+}
+
+/* question incorrect */
+.icon-error {
+  position: absolute;
+  right: 10px;
+  display: none;
+}
+
+.quiz-list > li.question-incorrect {
+  outline: 2px solid var(--red-500);
+}
+
+.quiz-list > li.question-incorrect .quiz-letter-container {
+  background-color: var(--red-500);
+}
+/* question correct */
+
+.quiz-list > li.question-correct {
+  outline: 2px solid var(--green-500);
+}
+
+.quiz-list > li.question-correct .quiz-letter-container {
+  background-color: var(--green-500);
 }

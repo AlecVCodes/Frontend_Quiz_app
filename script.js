@@ -17,6 +17,10 @@ const quizOptionButtons = document.querySelectorAll(".choose-quiz-option");
 /* quiz UI screen */
 const quizUIScreen = document.querySelector("#quiz-ui");
 
+const quizAnswersContainer = document.querySelector(".quiz-list");
+
+quizAnswersContainer.style.pointEvents = "none";
+
 /* quiz options ui */
 const quizQuestion = document.querySelector(".current-quiz-question");
 
@@ -25,7 +29,11 @@ const quizAnswers = document.querySelectorAll(".quiz-list > li");
 const quizAnswerstitle = document.querySelectorAll(".quiz-answer-title");
 
 /* next question button */
-const nextQuestionButton = document.querySelector("#next-question-btn");
+const submitAnswerButton = document.querySelector("#next-question-btn");
+
+// const errorIcons = document.querySelectorAll(".icon-error");
+
+// const correctIcons = document.querySelectorAll(".icon-correct");
 
 //
 // STATE MANAGEMENT
@@ -36,7 +44,11 @@ let quizLibrary; // all quizzes from JSON
 let selectedQuiz; // currently chosen quiz
 let isQuizLoaded = false;
 
-let userInputtedAnswer;
+let userInputtedAnswerUI;
+
+let userInputtedAnswerValue;
+
+let submittedAnswer = null;
 
 let quizScore = 0;
 let activeQuestionIndex = 0;
@@ -51,8 +63,6 @@ let activeQuizState = {
   ],
   answer: "",
 };
-
-console.log(activeQuizState);
 
 // Check saved theme on load
 if (darkMode === "enabled") {
@@ -83,22 +93,29 @@ quizOptionButtons.forEach((quizOptionButton, quizIndex) => {
 
 quizAnswers.forEach((answer, index) => {
   answer.addEventListener("click", () => {
-    userInputtedAnswer = answer.textContent;
+    //answer UI
+    userInputtedAnswerUI = answer;
+    // answer value
+
+    userInputtedAnswerValue = answer.querySelector("label h2").textContent;
 
     //add active class
     showSelectedAnswer(answer);
 
-    return userInputtedAnswer;
+    return userInputtedAnswerValue;
   });
 });
 
 // update set of questions when user clicks on next question button
-nextQuestionButton.addEventListener("click", () => {
-  // check answer of user
-  checkAnswer();
-
-  // after checking answer then change the ui
-  changeQuestionLogic();
+submitAnswerButton.addEventListener("click", () => {
+  console.log(submittedAnswer);
+  if (submittedAnswer === null) {
+    // check answer of user
+    checkAnswer();
+  } else {
+    // after checking answer then change the ui
+    changeQuestionLogic();
+  }
 });
 
 //
@@ -106,7 +123,6 @@ nextQuestionButton.addEventListener("click", () => {
 //
 
 function enableDarkMode() {
-  console.log("enable dark mode");
   // add dark mode classes
   document.body.classList.add("dark-mode");
   themeToggleCircle.classList.add("dark-mode");
@@ -188,15 +204,33 @@ function changeQuestionLogic() {
     // move to next question
     activeQuestionIndex++;
 
-    //
+    // Reset the user input values
 
-    console.log(activeQuizState, "active quiz state");
+    userInputtedAnswerUI = null;
+    userInputtedAnswerValue = null;
+
+    //
 
     changeQuestionUI();
   }
 }
 
 function changeQuestionUI() {
+  // Enable pointer events again
+  quizAnswersContainer.style.pointerEvents = "auto";
+
+  // Change NextQuestion/SubmitAnswer Button text back to submit
+
+  submitAnswerButton.textContent = "Submit Answer";
+
+  // remove incorrect / incorrect classes from possible answers. Also remove active class
+
+  quizAnswers.forEach((answer) => {
+    answer.classList.remove("question-incorrect");
+    answer.classList.remove("question-correct");
+    answer.classList.remove("active");
+  });
+
   quizQuestion.textContent = activeQuizState.questions[0].question;
 
   quizAnswerstitle.forEach((answer, index) => {
@@ -206,20 +240,55 @@ function changeQuestionUI() {
   });
 }
 
+// highlight the selected answer chosen by the UI
 function showSelectedAnswer(answer) {
   quizAnswers.forEach((answer) => {
-    console.log(answer, "answer ui");
     answer.classList.remove("active");
   });
   answer.classList.add("active");
 }
 
+//Check the users answer and show the correct / incorrect answer in UI
 function checkAnswer() {
-  console.log("check answer function ran");
+  //if there is no user selected value when the submit button is pressed then end the function
+  if (
+    userInputtedAnswerValue === undefined ||
+    userInputtedAnswerValue === null
+  ) {
+    return;
+  }
+
+  //disable pointer events when submitting question
+
+  quizAnswersContainer.style.pointerEvents = "none";
+  // prompt user to go to next question by changing text of submit button
+
+  submitAnswerButton.textContent = "Next Question";
+
+  //make the submitted value the value that the user selected
+
+  submittedAnswer = userInputtedAnswerValue;
+
   // check if answer is incorrect
-  if (userInputtedAnswer !== activeQuizState.answer) {
+
+  if (userInputtedAnswerValue !== activeQuizState.answer) {
+    // apply incorrect classes to user input
+
+    const incorrectIcon = userInputtedAnswerUI.querySelector(".icon-error");
+    incorrectIcon.style.display = "block";
+    userInputtedAnswerUI.classList.add("question-incorrect");
+
+    // show what should be the correct answer
+
     return;
   } else {
-    console.log("correct answer! well done");
+    //apply correct class to user input
+    userInputtedAnswerUI.classList.add("question-correct");
+
+    //add one to the quiz score
+
+    quizScore++;
   }
+
+  console.log(quizScore, "quiz score");
 }
