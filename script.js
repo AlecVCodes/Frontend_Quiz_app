@@ -16,7 +16,7 @@ const quizOptionButtons = document.querySelectorAll(".choose-quiz-option");
 
 /* quiz UI screen */
 const quizUIScreen = document.querySelector("#quiz-ui");
-
+const quizOptionTitle = document.querySelector(".quiz-option-title");
 const progressBarTrack = document.querySelector(".current-quiz-progress-bar");
 const progressBarFill = document.querySelector(".progress-bar-filled");
 
@@ -35,10 +35,12 @@ const quizAnswerstitle = document.querySelectorAll(".quiz-answer-title");
 /* next question button */
 const submitAnswerButton = document.querySelector("#next-question-btn");
 
-// const errorIcons = document.querySelectorAll(".icon-error");
+/* game completed UI */
 
-// const correctIcons = document.querySelectorAll(".icon-correct");
-
+const gameCompletedUI = document.querySelector("#end-quiz");
+const finalScoreText = document.querySelector(".final-score-text");
+const scoreCardTitle = document.querySelector(".score-card-title");
+const playAgainBtn = document.querySelector(".play-again-btn");
 //
 // STATE MANAGEMENT
 //
@@ -111,7 +113,6 @@ quizAnswers.forEach((answer, index) => {
 
 // update set of questions when user clicks on next question button
 submitAnswerButton.addEventListener("click", () => {
-  console.log(submittedAnswer, "submitted Answer");
   if (submittedAnswer === null) {
     // check answer of user
     checkAnswer();
@@ -123,6 +124,11 @@ submitAnswerButton.addEventListener("click", () => {
 
     changeQuestionLogic();
   }
+});
+
+//Restart the game
+playAgainBtn.addEventListener("click", () => {
+  showQuizUI();
 });
 
 //
@@ -175,8 +181,18 @@ function fetchQuizData(index) {
 
 // show the full quiz UI
 function showQuizUI() {
+  // reset all key state variables
+  quizScore = 0;
+  activeQuestionIndex = 0;
+  currentQuestionNumber = 1;
+  submittedAnswer = null;
+  userInputtedAnswerValue = null;
+  userInputtedAnswerUI = null;
+
   if (!isQuizLoaded) return;
 
+  //hide end screen if restarting game
+  gameCompletedUI.classList.remove("active");
   // hide main menu
   mainMenuScreen.classList.remove("active");
 
@@ -186,6 +202,42 @@ function showQuizUI() {
   // change the data
   activeQuizState.title = selectedQuiz.title;
 
+  //change HTML of quiz title
+  quizOptionTitle.style.display = "flex";
+  if (activeQuizState.title === "HTML") {
+    quizOptionTitle.innerHTML = `
+  <div class="icon-background html">
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40">
+      <path fill="#FF7E35" d="M24.508 7.607a1.25 1.25 0 0 1 .634 1.65l-10 22.5a1.25 1.25 0 1 1-2.284-1.015l10-22.5a1.251 1.251 0 0 1 1.65-.635ZM10.832 13.44a1.249 1.249 0 0 1 .1 1.765L6.674 20l4.263 4.795a1.25 1.25 0 1 1-1.87 1.66l-5-5.625a1.25 1.25 0 0 1 0-1.66l5-5.625a1.25 1.25 0 0 1 1.764-.105Zm18.337 0a1.25 1.25 0 0 1 1.765.105l5 5.625a1.25 1.25 0 0 1 0 1.66l-5 5.625a1.25 1.25 0 1 1-1.87-1.66L33.327 20l-4.262-4.795a1.25 1.25 0 0 1 .105-1.765Z"/>
+    </svg>
+  </div>
+  <h2>HTML</h2>
+`;
+  }
+  if (activeQuizState.title === "CSS") {
+    quizOptionTitle.innerHTML = `
+  <div class="icon-background css">
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40"><path fill="#2FD887" d="M10 2.505a1.25 1.25 0 0 0-1.25 1.25V21.25a5 5 0 0 0 5 5H15v6.25a4.999 4.999 0 0 0 9.615 1.913c.25-.607.38-1.257.38-1.913v-6.25h1.255a5 5 0 0 0 5-5V3.755A1.25 1.25 0 0 0 30 2.505H10ZM28.75 17.5h-17.5V5.005h7.5V8.76a1.25 1.25 0 0 0 2.5 0V5.005h2.5v6.24a1.25 1.25 0 0 0 2.5 0v-6.24h2.5V17.5Zm-17.5 3.75V20h17.5v1.25a2.5 2.5 0 0 1-2.5 2.5h-2.505a1.25 1.25 0 0 0-1.25 1.25v7.5a2.497 2.497 0 1 1-4.995 0V25a1.25 1.25 0 0 0-1.25-1.25h-2.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
+  </div>
+  <h2>CSS</h2>
+`;
+  }
+  if (activeQuizState.title === "JavaScript") {
+    quizOptionTitle.innerHTML = `
+  <div class="icon-background javascript">
+  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40"><path fill="#306AFF" d="M21.25 18.75A3.75 3.75 0 0 1 25 15h3.75a1.25 1.25 0 0 1 0 2.5H25a1.25 1.25 0 0 0-1.25 1.25V20A1.25 1.25 0 0 0 25 21.25h1.25A3.75 3.75 0 0 1 30 25v1.25A3.75 3.75 0 0 1 26.25 30H22.5a1.25 1.25 0 0 1 0-2.5h3.75a1.25 1.25 0 0 0 1.25-1.25V25a1.25 1.25 0 0 0-1.25-1.25H25A3.75 3.75 0 0 1 21.25 20v-1.25ZM20 16.25a1.25 1.25 0 0 0-2.5 0v10a1.25 1.25 0 0 1-1.25 1.25h-2.5a1.25 1.25 0 0 0 0 2.5h2.5A3.75 3.75 0 0 0 20 26.25v-10Zm-15-5A6.25 6.25 0 0 1 11.25 5h17.5A6.25 6.25 0 0 1 35 11.25v17.5A6.25 6.25 0 0 1 28.75 35h-17.5A6.25 6.25 0 0 1 5 28.75v-17.5Zm6.25-3.75a3.75 3.75 0 0 0-3.75 3.75v17.5a3.75 3.75 0 0 0 3.75 3.75h17.5a3.75 3.75 0 0 0 3.75-3.75v-17.5a3.75 3.75 0 0 0-3.75-3.75h-17.5Z"/></svg>
+  </div>
+  <h2>JavaScript</h2>
+`;
+  }
+  if (activeQuizState.title === "Accessibility") {
+    quizOptionTitle.innerHTML = `
+  <div class="icon-background accessibility">
+  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40"><path fill="#A729F5" d="M16.875 8.125a3.125 3.125 0 1 1 6.25 0 3.125 3.125 0 0 1-6.25 0ZM20 2.5a5.625 5.625 0 0 0-5.475 6.915l-4.03-1.625a4 4 0 0 0-5.19 2.18 3.95 3.95 0 0 0 2.175 5.175l5.02 2.027v5.96l-4.532 8.525a3.98 3.98 0 0 0 7.024 3.738L20 25.975l5.01 9.42a3.978 3.978 0 0 0 7.025-3.735L27.5 23.13v-5.957l5.02-2.028a3.95 3.95 0 0 0 2.175-5.175 4 4 0 0 0-5.19-2.183l-4.027 1.628A5.626 5.626 0 0 0 20 2.5ZM7.618 10.922a1.5 1.5 0 0 1 1.94-.817l8.57 3.463a5 5 0 0 0 3.744 0l8.57-3.463a1.5 1.5 0 0 1 1.94.817 1.45 1.45 0 0 1-.8 1.905l-5.02 2.025A2.5 2.5 0 0 0 25 17.175v5.957c0 .41.1.814.293 1.175l4.535 8.528a1.48 1.48 0 0 1-2.61 1.39l-5.01-9.425a2.5 2.5 0 0 0-4.415 0l-5.008 9.418a1.477 1.477 0 1 1-2.61-1.388l4.532-8.525A2.5 2.5 0 0 0 15 23.133v-5.96a2.5 2.5 0 0 0-1.563-2.318l-5.02-2.03a1.45 1.45 0 0 1-.8-1.902Z"/></svg>
+  </div>
+  <h2>Accessibility</h2>
+`;
+  }
   updateProgressBar();
 
   // show first set of questions
@@ -194,7 +246,7 @@ function showQuizUI() {
 
 function changeQuestionLogic() {
   if (currentQuestionNumber > 10) {
-    // show end screen
+    // show end screen and end the game
     showQuizEndScreen();
   }
   // Reset the user input values
@@ -222,13 +274,11 @@ function changeQuestionLogic() {
     // move to next question
     activeQuestionIndex++;
 
-    console.log(userInputtedAnswerValue, "user inputted value");
     changeQuestionUI();
   }
 }
 
 function changeQuestionUI() {
-  console.log("function ran");
   // Enable pointer events again
   quizAnswersContainer.style.pointerEvents = "auto";
 
@@ -326,16 +376,19 @@ function checkAnswer() {
 }
 
 function updateProgressBar() {
-  console.log("progress bar updated");
-  //update the width of the progrss bar based on the quiz score
+  //update the width of the progrss bar based on the current question
 
-  console.log(currentQuestionNumber, "current question number");
   progressBarFill.style.width = `${(currentQuestionNumber / 10) * 100}%`;
 }
-
 
 // finish the quiz
 
 function showQuizEndScreen() {
-  
+  quizUIScreen.classList.remove("active");
+  gameCompletedUI.classList.add("active");
+
+  //show score card title
+  scoreCardTitle.textContent = activeQuizState.title;
+  // show final score
+  finalScoreText.innerHTML = `<span>${quizScore}</span> out of 10`;
 }

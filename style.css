@@ -108,6 +108,7 @@ header {
 
 .quiz-option-title {
   display: none;
+  align-items: center;
 }
 
 /* dark / light mode toggle */
@@ -179,23 +180,28 @@ button.toggle-theme-btn {
   margin-right: 1rem;
 }
 
-/* main meny icons */
+/* main menu icons */
 
 .icon-background {
   border-radius: 12px;
   padding: 0.25rem;
+  margin-right: 1rem;
 }
 
-.choose-quiz-option:nth-of-type(1) > .icon-background {
+.choose-quiz-option:nth-of-type(1) > .icon-background,
+.icon-background.html {
   background-color: var(--orange-50);
 }
-.choose-quiz-option:nth-of-type(2) > .icon-background {
+.choose-quiz-option:nth-of-type(2) > .icon-background,
+.icon-background.css {
   background-color: var(--green-100);
 }
-.choose-quiz-option:nth-of-type(3) > .icon-background {
+.choose-quiz-option:nth-of-type(3) > .icon-background,
+.icon-background.javascript {
   background-color: var(--blue-50);
 }
-.choose-quiz-option:nth-of-type(4) > .icon-background {
+.choose-quiz-option:nth-of-type(4) > .icon-background,
+.icon-background.accessibility {
   background-color: var(--purple-100);
 }
 
@@ -229,6 +235,7 @@ button.toggle-theme-btn {
   background-color: white;
   border-radius: 5px;
   position: relative;
+  overflow: hidden;
 }
 
 .progress-bar-filled {
@@ -275,7 +282,8 @@ button.toggle-theme-btn {
 
 /* submit answer btn */
 
-.next-question-btn {
+.next-question-btn,
+.play-again-btn {
   margin-top: 1rem;
   background-color: var(--purple-600);
   color: #fff;
@@ -286,17 +294,34 @@ button.toggle-theme-btn {
   transition: 200ms ease;
 }
 
-.next-question-btn:hover {
+.next-question-btn:hover,
+.play-again-btn:hover {
   cursor: pointer;
   background-color: #d394fa;
 }
 
-/* question incorrect */
+/* question incorrect  and correct*/
 .icon-error,
 .icon-correct {
   position: absolute;
   right: 10px;
   display: none;
+}
+
+/* error message if user has not selected an answer */
+
+.error-message {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+  color: var(--red-500);
+  text-align: center;
+}
+
+.error-message > .icon-error {
+  position: relative;
+  display: block !important;
 }
 
 .quiz-list > li.question-incorrect {
@@ -314,4 +339,29 @@ button.toggle-theme-btn {
 
 .quiz-list > li.question-correct .quiz-letter-container {
   background-color: var(--green-500);
+}
+
+/* end game screen Ui */
+
+#end-quiz {
+  display: none;
+}
+
+#end-quiz.active {
+  display: flex;
+}
+
+.score-card {
+  text-align: center;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+.final-score-text > p {
+}
+
+.final-score-text > span {
+  display: block;
+  font-size: clamp(5.5rem, 10vw, 9rem);
 }

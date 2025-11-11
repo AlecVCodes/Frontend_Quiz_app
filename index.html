@@ -24,7 +24,7 @@
     <header>
       <h2 class="current-quiz-title"></h2>
 
-      <div class="quiz-option-title"><h2>Quiz Option</h2></div>
+      <div class="quiz-option-title"></div>
       <div class="light-dark-mode-toggle">
         <svg
           class="sun-icon"
@@ -301,15 +301,32 @@
           <button id="next-question-btn" class="next-question-btn">
             Submit Answer
           </button>
+          <div class="error-message">
+            <svg
+              class="icon-error"
+              xmlns="http://www.w3.org/2000/svg"
+              width="40"
+              height="40"
+              fill="none"
+              viewBox="0 0 40 40"
+            >
+              <path
+                fill="#EE5454"
+                d="M20 5a15 15 0 1 1 0 30 15 15 0 0 1 0-30Zm0 2.5a12.5 12.5 0 1 0 0 25 12.5 12.5 0 0 0 0-25Zm-5.402 7.415.142-.175a1.25 1.25 0 0 1 1.595-.143l.175.143L20 18.233l3.49-3.493a1.25 1.25 0 0 1 1.595-.143l.175.143a1.25 1.25 0 0 1 .142 1.595l-.142.175L21.767 20l3.493 3.49a1.25 1.25 0 0 1 .142 1.595l-.142.175a1.25 1.25 0 0 1-1.595.142l-.175-.142L20 21.767l-3.49 3.493a1.25 1.25 0 0 1-1.595.142l-.175-.142a1.25 1.25 0 0 1-.143-1.595l.143-.175L18.233 20l-3.493-3.49a1.25 1.25 0 0 1-.143-1.595Z"
+              />
+            </svg>
+            <p>Please Select an answer</p>
+          </div>
         </div>
       </section>
       <section class="UI-Screen" id="end-quiz">
         <h1>Quiz completed <br />You Scored...</h1>
         <div class="end-game-info">
           <article class="score-card">
-            <h2>Lorem, ipsum dolor.</h2>
-            <p class="final score">1 <span>out of 10</span></p>
+            <h2 class="score-card-title">Lorem, ipsum dolor.</h2>
+            <p class="final-score-text"></p>
           </article>
+          <button class="play-again-btn">Play Again</button>
         </div>
       </section>
     </main>
