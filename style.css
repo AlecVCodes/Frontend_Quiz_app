@@ -51,6 +51,7 @@ html {
 /* darkmode styles */
 
 .dark-mode {
+  --score-card-bg: var(--blue-850);
   --progress-bar-track-colour: var(--blue-850);
   --body: var(--blue-900);
   --main-menu-options-text: #fff;
@@ -60,6 +61,7 @@ html {
 }
 
 body {
+  --score-card-bg: #fff;
   --progress-bar-track-colour: #fff;
   background-color: var(--body);
   --text: var(--blue-900);
@@ -429,16 +431,24 @@ button.toggle-theme-btn {
 .score-card {
   text-align: center;
   padding: 2rem;
-  background-color: #fff;
+  background-color: var(--score-card-bg);
   border-radius: 12px;
+}
+
+.end-game-title {
+  color: var(--text);
 }
 
 .end-game-title > span {
   font-weight: 800;
 }
-.final-score-text > p {
+
+.final-score-text {
   color: var(--text);
-  font-weight: 800;
+}
+.final-score-text > span {
+  color: var(--text);
+  font-weight: 600;
 }
 
 .final-score-text > span {
@@ -455,5 +465,17 @@ button.toggle-theme-btn {
 
   .score-card-title {
     margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 60em) {
+  #end-quiz {
+    flex-direction: row;
+
+    max-width: 1200px;
+    justify-content: space-between;
+  }
+  .end-game-info {
+    width: 50%;
   }
 }
