@@ -8,6 +8,8 @@ const themeToggleBtn = document.querySelector(".toggle-theme-btn");
 const sunIconFill = document.querySelector(".sun-icon > path");
 const moonIconFill = document.querySelector(".moon-icon > path");
 
+/* background image */
+const backgroundImage = document.querySelector(".background-img");
 /* main menu screen */
 const mainMenuScreen = document.querySelector("#main-menu");
 
@@ -32,6 +34,7 @@ const quizAnswers = document.querySelectorAll(".quiz-list > li");
 
 const quizAnswerstitle = document.querySelectorAll(".quiz-answer-title");
 
+const questionErrorMessage = document.querySelector(".error-message");
 /* next question button */
 const submitAnswerButton = document.querySelector("#next-question-btn");
 
@@ -144,6 +147,10 @@ function enableDarkMode() {
   sunIconFill.style.fill = "#fff";
   // set dark mode value to enabled in local storage
   localStorage.setItem("darkMode", "enabled");
+
+  // change background image to dark version
+  backgroundImage.classList.replace("light", "dark");
+  updateSources("dark");
 }
 
 function disableDarkMode() {
@@ -154,6 +161,10 @@ function disableDarkMode() {
   moonIconFill.style.fill = "#626C7F";
   sunIconFill.style.fill = "#626C7F";
   localStorage.setItem("darkMode", null);
+
+  // change background image to light version
+  backgroundImage.classList.replace("dark", "light");
+  updateSources("light");
 }
 
 // Get Data for selected quiz
@@ -332,14 +343,20 @@ function showSelectedAnswer(answer) {
 //Check the users answer and show the correct / incorrect answer in UI
 function checkAnswer() {
   //if there is no user selected value when the submit button is pressed then end the function
+
   if (
     userInputtedAnswerValue === undefined ||
     userInputtedAnswerValue === null
   ) {
+    displayErrorMessageUI();
     return;
   }
 
-  //disable pointer events when submitting question
+  //hide error message when the user input isnt null
+
+  hideErrorMessageUI();
+
+  //disable pointer events after submitting question - this disables the user from being able to change their answer if it's wrong
 
   quizAnswersContainer.style.pointerEvents = "none";
   // prompt user to go to next question by changing text of submit button
@@ -381,6 +398,16 @@ function updateProgressBar() {
   progressBarFill.style.width = `${(currentQuestionNumber / 10) * 100}%`;
 }
 
+// quiz error message
+
+function displayErrorMessageUI() {
+  questionErrorMessage.style.display = "flex";
+}
+
+function hideErrorMessageUI() {
+  questionErrorMessage.style.display = "none";
+}
+
 // finish the quiz
 
 function showQuizEndScreen() {
@@ -391,4 +418,15 @@ function showQuizEndScreen() {
   scoreCardTitle.textContent = activeQuizState.title;
   // show final score
   finalScoreText.innerHTML = `<span>${quizScore}</span> out of 10`;
+}
+
+//update backgroundImage sources
+
+function updateSources(theme) {
+  const sources = backgroundImage.querySelectorAll("source");
+  sources.forEach((source) => {
+    source.srcset = source.srcset.replace(/(light|dark)/, theme);
+  });
+  const img = backgroundImage.querySelector("img");
+  img.src = img.src.replace(/(light|dark)/, theme);
 }

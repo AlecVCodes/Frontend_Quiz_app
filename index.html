@@ -21,6 +21,22 @@
     <title>Frontend quiz app</title>
   </head>
   <body>
+    <picture class="background-img light">
+      <source
+        srcset="assets/images/pattern-background-desktop-light.svg"
+        media="(min-width:1220px)"
+      />
+      <source
+        srcset="assets/images/pattern-background-desktop-dark.svg"
+        media="(min-width:1220px)"
+      />
+      <source
+        srcset="assets/images/pattern-background-tablet-light.svg"
+        media="(min-width:800px)"
+      />
+      <img src="assets/images/pattern-background-mobile-light.svg" alt="" />
+    </picture>
+
     <header>
       <h2 class="current-quiz-title"></h2>
 
@@ -135,10 +151,14 @@
         </section>
       </section>
       <section class="UI-Screen" id="quiz-ui">
-        <span class="question-number">Question 1 of 10</span>
-        <h1 class="current-quiz-question"></h1>
-        <div class="current-quiz-progress-bar">
-          <div class="progress-bar-filled"></div>
+        <div class="quiz-details">
+          <div class="quiz-details-text">
+            <span class="question-number">Question 1 of 10</span>
+            <h1 class="current-quiz-question"></h1>
+          </div>
+          <div class="current-quiz-progress-bar">
+            <div class="progress-bar-filled"></div>
+          </div>
         </div>
         <div class="user-inputs">
           <ul class="quiz-list" role="radiogroup">
@@ -320,7 +340,9 @@
         </div>
       </section>
       <section class="UI-Screen" id="end-quiz">
-        <h1>Quiz completed <br />You Scored...</h1>
+        <h1 class="end-game-title">
+          Quiz completed <br /><span>You Scored...</span>
+        </h1>
         <div class="end-game-info">
           <article class="score-card">
             <h2 class="score-card-title">Lorem, ipsum dolor.</h2>
