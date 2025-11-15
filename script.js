@@ -19,7 +19,6 @@ const quizOptionButtons = document.querySelectorAll(".choose-quiz-option");
 /* quiz UI screen */
 const quizUIScreen = document.querySelector("#quiz-ui");
 const quizOptionTitle = document.querySelector(".quiz-option-title");
-const progressBarTrack = document.querySelector(".current-quiz-progress-bar");
 const progressBarFill = document.querySelector(".progress-bar-filled");
 
 const quizAnswersContainer = document.querySelector(".quiz-list");
@@ -61,7 +60,7 @@ let currentQuestionNumber = 1;
 let quizScore = 0;
 let activeQuestionIndex = 0;
 
-let activeQuizState = {
+const activeQuizState = {
   title: "",
   questions: [
     {
